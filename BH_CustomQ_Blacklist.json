@@ -12,6 +12,18 @@
                 }
             ]
         },
+                {
+            "name": "Shortest Path - Owned to HighValue",
+            "queryList": [
+                {
+                    "final": true,
+                    "query":
+                        "MATCH p=shortestPath((O {owned: True})-[r:{}*1..]->(H {highvalue: True})) RETURN p",
+                    "props": {},
+                    "allowCollapse": true
+                }
+            ]
+        },
         {
             "name": "All Shortest Path - Owned to HighValue - Exclude Blacklist",
             "queryList": [
@@ -24,6 +36,18 @@
                 }
             ]
         },
+                {
+            "name": " Shortest Path - Owned to HighValue - Exclude Blacklist",
+            "queryList": [
+                {
+                    "final": true,
+                    "query":
+                        "MATCH p=shortestPath((O {owned: True})-[r:{}*1..]->(H {highvalue: True})) WHERE NONE(x IN NODES(p) WHERE x:Blacklist) RETURN p",
+                    "props": {},
+                    "allowCollapse": true
+                }
+            ]
+        },
         {
             "name": "Owned - View All",
             "queryList": [
@@ -31,6 +55,24 @@
                     "final": true,
                     "query":
                         "MATCH (x {owned: True}) RETURN x",
+                    "props": {},
+                    "allowCollapse": true
+                }
+            ]
+        },
+        {
+            "name": "Owned - Add User",
+            "queryList": [
+                {
+                    "final": false,
+                    "query":
+                        "MATCH (x:User) RETURN x.name ORDER BY x.name",
+                    "props": {},
+                    "allowCollapse": true
+                },
+                {
+                    "final": true,
+                    "query": "MATCH (x:User) WHERE x.name={result} SET x:owned",
                     "props": {},
                     "allowCollapse": true
                 }
@@ -206,4 +248,3 @@
         }
     ]
 }
-
